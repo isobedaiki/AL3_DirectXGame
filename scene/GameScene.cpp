@@ -1,6 +1,7 @@
 #include "GameScene.h"
 #include "TextureManager.h"
 #include <cassert>
+#include "ImGuiManager.h"
 
 GameScene::GameScene() {}
 
@@ -11,13 +12,24 @@ void GameScene::Initialize() {
 	dxCommon_ = DirectXCommon::GetInstance();
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
-	textureHandle_ = TextureManager::Load("sample.png");
+	//soundDataHandle_ = audio_->LoadWave("fanfare.wav");
 	model_ = Model::Create();
 	worldTransform_.Initialize();
 	viewProjevtion_.Initialize();
 }
 
-void GameScene::Update() {}
+void GameScene::Update() { 
+	ImGui::Begin("Debug1");
+	//入力ボックス
+	ImGui::InputFloat3("InputFloat3", inputFloat3);
+	ImGui::Text("Kamata Tarou %d.%d.%d", 2050, 12, 31);
+	//スライダー
+	ImGui::SliderFloat3("SliderFloat3", inputFloat3, 0.0f, 1.0f);
+	ImGui::End();
+
+	//デモウィンドウ
+	ImGui::ShowDemoWindow();
+}
 
 void GameScene::Draw() {
 
@@ -45,7 +57,7 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
-	model_->Draw(worldTransform_, viewProjevtion_, textureHandle_);
+	
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();

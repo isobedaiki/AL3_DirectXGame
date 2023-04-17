@@ -46,7 +46,10 @@ private: // メンバ変数
 	Audio* audio_ = nullptr;
 
 	//テクスチャハンドル
-	uint32_t textureHandle_ = 0;
+	//uint32_t soundDataHandle_ = 0;
+
+	//ImGuiで値を入力する変数
+	float inputFloat3[3] = {0, 0, 0};
 
 	//スプライト
 	Model* model_ = nullptr;
