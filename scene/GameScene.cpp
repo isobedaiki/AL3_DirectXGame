@@ -3,10 +3,12 @@
 #include <cassert>
 #include "ImGuiManager.h"
 #include "PrimitiveDrawer.h"
+#include "AxisIndicator.h"
+
 
 GameScene::GameScene() {}
 
-GameScene::~GameScene() {delete sprite_,delete model_;}
+GameScene::~GameScene() { delete sprite_, delete model_, delete debugCamera_; }
 
 void GameScene::Initialize() {
 
@@ -22,8 +24,11 @@ void GameScene::Initialize() {
 	PrimitiveDrawer::GetInstance()->SetViewProjection(&viewProjevtion_);
 	//スプライトの生成
 	sprite_ = Sprite::Create(textureHandle_, {100, 50});
-	//debugCamera_ = new DebugCamera();
-	
+	debugCamera_ = new DebugCamera(100,100);
+	audio_->PlayWave(soundDataHandle_);
+	voiceHandle_ = audio_->PlayWave(soundDataHandle_, true);
+	AxisIndicator::GetInstance()->SetVisible(true);
+	AxisIndicator::GetInstance()->SetTargetViewProjection(&debugCamera_->GetViewProjection());
 }
 
 void GameScene::Update() { 
@@ -37,6 +42,11 @@ void GameScene::Update() {
 	worldTransform_.Initialize();
 	viewProjevtion_.Initialize();
 
+	//音
+	if (input_->TriggerKey(DIK_SPACE)) {
+		audio_->StopWave(voiceHandle_);
+	}
+
 	ImGui::Begin("Debug1");
 	//入力ボックス
 	ImGui::InputFloat3("InputFloat3", inputFloat3);
@@ -47,6 +57,9 @@ void GameScene::Update() {
 
 	//デモウィンドウ
 	ImGui::ShowDemoWindow();
+
+	//デバッグカメラ
+	debugCamera_->Update();
 }
 
 void GameScene::Draw() {
@@ -76,6 +89,7 @@ void GameScene::Draw() {
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
 	model_->Draw(worldTransform_, viewProjevtion_, textureHandle_);
+	model_->Draw(worldTransform_, debugCamera_->GetViewProjection(), textureHandle2_);
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
