@@ -2,6 +2,7 @@
 #include "TextureManager.h"
 #include <cassert>
 #include "ImGuiManager.h"
+#include "PrimitiveDrawer.h"
 
 GameScene::GameScene() {}
 
@@ -16,6 +17,8 @@ void GameScene::Initialize() {
 	model_ = Model::Create();
 	worldTransform_.Initialize();
 	viewProjevtion_.Initialize();
+	PrimitiveDrawer::GetInstance()->SetViewProjection(&viewProjevtion_);
+
 }
 
 void GameScene::Update() { 
@@ -58,6 +61,7 @@ void GameScene::Draw() {
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
 	
+	
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
@@ -70,6 +74,8 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>
+	 
+	PrimitiveDrawer::GetInstance()->DrawLine3d({0, 0, 0}, {0, 10, 0}, {1.0f, 0.0f, 0.0f, 1.0f});
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
