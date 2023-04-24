@@ -1,6 +1,7 @@
 #pragma once
-#include<Model.h>
-#include<WorldTransform.h>
+#include"Model.h"
+#include "ViewProjection.h"
+#include"WorldTransform.h"
 
 class Player {
 public:
@@ -8,7 +9,7 @@ public:
 
 	void Update();
 
-	void Draw();
+	void Draw(ViewProjection&viewProjection);
 
 private:
 	WorldTransform worldTransform_;
@@ -17,4 +18,5 @@ private:
 
 	uint32_t textureHandle_ = 0u;
 
+	void Initialize();
 };

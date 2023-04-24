@@ -1,19 +1,16 @@
-#include <Player.h>
+#include "Player.h"
 #include <assert.h>
 
 void Player::Initialize(Model* model,uint32_t textureHandle) { 
 	assert(model);
 
-	model = model_;
-	textureHandle = textureHandle_;
-
-
+	model_ = model;
+	worldTransform_.Initialize();
+	textureHandle_ = textureHandle;
 }
 
-void Player::Update() {
+void Player::Update() { worldTransform_.TransferMatrix(); }
 
-}
-
-void Player::Draw() {
-
+void Player::Draw(ViewProjection& viewProjection) { 
+	model_->Draw(worldTransform_, viewProjection, textureHandle_);
 }
