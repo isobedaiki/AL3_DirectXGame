@@ -41,7 +41,6 @@ void Player::Update() {
 
 	worldTransform_.matWorld_ = MakeAffineMatrix( worldTransform_.scale_, worldTransform_.rotation_, worldTransform_.translation_);
 
-
 	const float kMoveLintX = 15.0f;
 	const float kMoveLintY = 15.0f;
 
