@@ -4,6 +4,7 @@
 #include "ViewProjection.h"
 #include"WorldTransform.h"
 #include"PlayerBullet.h"
+#include<list>
 
 class Player {
 public:
@@ -12,12 +13,14 @@ public:
 	void Update();
 	void Draw(ViewProjection& viewProjection);
 	void Attack();
+	~Player();
+	/*std::list<PlayerBullet*> bullets_;*/
 
 private:
-
 	WorldTransform worldTransform_;
 	uint32_t textureHandle_ = 0u;
 	Model* model_ = nullptr;
 	Input* input_ = nullptr;
 	PlayerBullet* bullet_ = nullptr;
+	std::list<PlayerBullet*> bullets_;
 };
