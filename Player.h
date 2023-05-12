@@ -14,7 +14,6 @@ public:
 	void Draw(ViewProjection& viewProjection);
 	void Attack();
 	~Player();
-	/*std::list<PlayerBullet*> bullets_;*/
 
 private:
 	WorldTransform worldTransform_;
