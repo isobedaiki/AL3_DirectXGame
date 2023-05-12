@@ -18,5 +18,5 @@ private:
 
 	uint32_t textureHandle_ = 0u;
 
-	void Initialize();
+	//void Initialize();
 };
