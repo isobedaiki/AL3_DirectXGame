@@ -1,6 +1,7 @@
 #include"Player.h"
 #include<assert.h>
 #include "ImGuiManager.h"
+#include"MathUtility.h"
 
 void Player::Initialize(Model* model, uint32_t textureHandle) {
 	model_ = model;
@@ -13,6 +14,14 @@ void Player::Update() {
 
 	Vector3 move = {0, 0, 0};
 	const float kcharacterSpeed = 0.2f;
+
+	bullets_.remove_if([](PlayerBullet* bullet) {
+		if (bullet->IsDead()) {
+			delete bullet;
+			return true;
+		}
+		return false;
+	});
 
 	if (input_->PushKey(DIK_LEFT)) {
 		move.x -= kcharacterSpeed;
@@ -62,7 +71,6 @@ void Player::Update() {
 	for (PlayerBullet* bullet : bullets_) {
 		bullet->Update();
 	}
-
 }
 
 void Player::Draw(ViewProjection& viewProjection) {
@@ -76,8 +84,13 @@ void Player::Draw(ViewProjection& viewProjection) {
 void Player::Attack() {
 	if (input_->TriggerKey(DIK_SPACE)) {
 
+		const float kBulletSpeed = 1.0f;
+		Vector3 velocity(0, 0, kBulletSpeed);
+		
+		velocity = TransformNormal(velocity, worldTransform_.matWorld_);
+
 		PlayerBullet* newBullet = new PlayerBullet();
-		newBullet->Initialize(model_, worldTransform_.translation_);
+		newBullet->Initialize(model_, worldTransform_.translation_,velocity);
 		bullet_ = newBullet;
 
 		bullets_.push_back(newBullet);
