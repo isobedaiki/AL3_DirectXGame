@@ -6,7 +6,7 @@
 
 class Enemy {
 public:
-	void Initialize(Model* model, uint32_t textureHandle);
+	void Initialize(Model* model, const Vector3& pos);
 	void Update();
 	void Draw(ViewProjection& viewProjection);
 

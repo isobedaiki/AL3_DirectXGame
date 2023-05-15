@@ -9,6 +9,7 @@
 #include "ViewProjection.h"
 #include "WorldTransform.h"
 #include "Player.h"
+#include "Enemy.h"
 #include"DebugCamera.h"
 
 /// <summary>
@@ -48,6 +49,7 @@ private: // メンバ変数
 	Audio* audio_ = nullptr;
 	Model* model_ = nullptr;
 	Player* player_ = nullptr;
+	Enemy* enemy_ = nullptr;
 
 
 	ViewProjection viewProjection_;
