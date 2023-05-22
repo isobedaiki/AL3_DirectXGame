@@ -15,6 +15,7 @@ public:
 	void Attack();
 	~Player();
 
+
 private:
 	WorldTransform worldTransform_;
 	uint32_t textureHandle_ = 0u;
@@ -22,4 +23,5 @@ private:
 	Input* input_ = nullptr;
 	PlayerBullet* bullet_ = nullptr;
 	std::list<PlayerBullet*> bullets_;
+
 };
