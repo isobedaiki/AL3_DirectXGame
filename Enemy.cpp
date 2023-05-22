@@ -9,7 +9,7 @@ void Enemy::Initialize(Model* model, const Vector3& pos) {
 void Enemy::Update() { 
 	const float kcharacterSpeed = 0.3f;
 	worldTransform_.UpdateMatrix();
-	//worldTransform_.translation_.z -= kcharacterSpeed;
+	worldTransform_.translation_.z -= kcharacterSpeed;
 
 	switch (phase_) {
 	case Phase::Approach:
