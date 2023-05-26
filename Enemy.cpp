@@ -1,5 +1,7 @@
-#include "Enemy.h"
+﻿#include "Enemy.h"
+#include "Player.h"
 #include<assert.h>
+#include<cmath>
 #include "ImGuiManager.h"
 #include"MathUtility.h"
 
@@ -61,15 +63,31 @@ void Enemy::Draw(ViewProjection& viewProjection) {
 }
 
 void Enemy::Fire() {
+	assert(player_);
 
 	const float kBulletSpeed = 1.0f;
-	Vector3 velocity(kBulletSpeed, 0, 0);
 
-	velocity = TransformNormal(velocity, worldTransform_.matWorld_);
+	/*player_->GetWorldPosition();
+	GetWorldPosition();*/
+	move.x = player_->GetWorldPosition().x - GetWorldPosition().x;
+ 	move.y = player_->GetWorldPosition().y - GetWorldPosition().y;
+	move.z = player_->GetWorldPosition().z - GetWorldPosition().z;
+
+	float length = sqrtf(move.x * move.x + move.y * move.y + move.z * move.z);
+
+	Vector3 dir = {
+		move.x /length,
+		move.y /length,
+		move.z /length
+	};
+
+	Vector3 velocity(dir.x * kBulletSpeed, dir.y * kBulletSpeed, dir.z * kBulletSpeed);
+
+	//velocity = TransformNormal(velocity, worldTransform_.matWorld_);
 
 	EnemyBullet* newBullet = new EnemyBullet();
 	newBullet->Initialize(model_, worldTransform_.translation_, velocity);
-	bullet_ = newBullet;
+	//bullet_ = newBullet;
 
 	bullets_.push_back(newBullet);
 }
@@ -82,4 +100,12 @@ Enemy::~Enemy() {
 	for (EnemyBullet* bullet : bullets_) {
 		delete bullet;
 	}
+}
+
+Vector3 Enemy::GetWorldPosition() {
+	Vector3 worldPos;
+	worldPos.x = worldTransform_.translation_.x;
+	worldPos.y = worldTransform_.translation_.y;
+	worldPos.z = worldTransform_.translation_.z;
+	return worldPos;
 }
