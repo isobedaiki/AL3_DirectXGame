@@ -7,16 +7,16 @@ void EnemyBullet::Initialize(Model* model, const Vector3& pos, const Vector3& ve
 
 	texturehandle_ = TextureManager::Load("uvChecker.png");
 
-	world_.Initialize();
-	world_.translation_ = pos;
+	worldTransform_.Initialize();
+	worldTransform_.translation_ = pos;
 	velocity_ = velocity;
 }
 
 void EnemyBullet::Update() {
-	world_.translation_.x += velocity_.x;
-	world_.translation_.y += velocity_.y;
-	world_.translation_.z += velocity_.z;
-	world_.UpdateMatrix();
+	worldTransform_.translation_.x += velocity_.x;
+	worldTransform_.translation_.y += velocity_.y;
+	worldTransform_.translation_.z += velocity_.z;
+	worldTransform_.UpdateMatrix();
 
 	if (--deathTimer_ <= 0) {
 		isDead_ = true;
@@ -25,5 +25,17 @@ void EnemyBullet::Update() {
 }
 
 void EnemyBullet::Draw(ViewProjection& viewProjection) {
-	model_->Draw(world_, viewProjection, texturehandle_);
+	model_->Draw(worldTransform_, viewProjection, texturehandle_);
+}
+
+Vector3 EnemyBullet::GetWorldPosition() { 
+	Vector3 worldPos;
+	worldPos.x = worldTransform_.translation_.x;
+	worldPos.y = worldTransform_.translation_.y;
+	worldPos.z = worldTransform_.translation_.z;
+	return worldPos;
+}
+
+void EnemyBullet::OnCollision() { 
+	isDead_ = true;
 }

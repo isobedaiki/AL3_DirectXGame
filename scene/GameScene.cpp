@@ -1,7 +1,7 @@
 #include "GameScene.h"
+#include "AxisIndicator.h"
 #include "TextureManager.h"
 #include <cassert>
-#include "AxisIndicator.h"
 
 GameScene::GameScene() {}
 
@@ -28,15 +28,16 @@ void GameScene::Initialize() {
 void GameScene::Update() {
 	player_->Update();
 	enemy_->Update();
-	
+
+	CheckAllCollosions();
+
 #ifdef _DEBUG
 	if (input_->TriggerKey(DIK_SPACE)) {
 		isDebugCameraActive_ = true;
 	}
 #endif // _DEBUG
 
-
-	//カメラの処理
+	// カメラの処理
 	if (isDebugCameraActive_) {
 		debugCamera_->Update();
 		viewProjection_.matView = debugCamera_->GetViewProjection().matView;
@@ -73,7 +74,7 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
-	/// 
+	///
 	player_->Draw(viewProjection_);
 	enemy_->Draw(viewProjection_);
 
@@ -92,5 +93,75 @@ void GameScene::Draw() {
 	// スプライト描画後処理
 	Sprite::PostDraw();
 
+#pragma endregion
+}
+
+void GameScene::CheckAllCollosions() {
+	Vector3 posA, posB;
+
+	const std::list<PlayerBullet*>& playerBullets = player_->GetBullets();
+
+	const std::list<EnemyBullet*>& enemyBullets = enemy_->GetBullets();
+
+#pragma region 自キャラと敵弾の当たり判定
+	posA = player_->GetWorldPosition();
+
+	for (EnemyBullet* bullets : enemyBullets) {
+		posB = bullets->GetWorldPosition();
+
+		float distance = (posB.x - posA.x) * (posB.x - posA.x) +
+		                 (posB.y - posA.y) * (posB.y - posA.y) +
+		                 (posB.z - posA.z) * (posB.z - posA.z);
+
+		float Radius = (player_->GetRadius() + bullets->GetRadius()) *
+		               (player_->GetRadius() + bullets->GetRadius());
+
+		if (distance <= Radius) {
+			player_->OnCollision();
+			bullets->OnCollision();
+		}
+	}
+
+#pragma endregion
+
+#pragma region 自弾と敵キャラの当たり判定
+		posA = enemy_->GetWorldPosition();
+	
+		for (PlayerBullet* bullets : playerBullets) {
+			posB = bullets->GetWorldPosition();
+	
+			float distance = (posB.x - posA.x) * (posB.x - posA.x) +
+			                 (posB.y - posA.y) * (posB.y - posA.y) +
+			                 (posB.z - posA.z) * (posB.z - posA.z);
+	
+			float Radius = (enemy_->radius_ + bullets->radius_) * (enemy_->radius_ + bullets->radius_);
+	
+			if (distance <= Radius) {
+				enemy_->OnCollision();
+				bullets->OnCollision();
+			}
+		}
+#pragma endregion
+
+#pragma region 自弾と敵弾の当たり判定
+	    for (PlayerBullet* bulletsA : playerBullets) {
+		    for (EnemyBullet* bulletsB : enemyBullets) {
+
+			    posA = bulletsA->GetWorldPosition();
+			    posB = bulletsB->GetWorldPosition();
+
+			    float distance = (posB.x - posA.x) * (posB.x - posA.x) +
+			                     (posB.y - posA.y) * (posB.y - posA.y) +
+			                     (posB.z - posA.z) * (posB.z - posA.z);
+
+			    float Radius = (bulletsA->radius_ + bulletsB->radius_) *
+			                   (bulletsA->radius_ + bulletsB->radius_);
+
+			    if (distance <= Radius) {
+				    bulletsA->OnCollision();
+				    bulletsB->OnCollision();
+			    }
+		    }
+	    }
 #pragma endregion
 }
