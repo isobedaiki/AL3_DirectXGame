@@ -3,11 +3,12 @@
 #include "ImGuiManager.h"
 #include"MathUtility.h"
 
-void Player::Initialize(Model* model, uint32_t textureHandle) {
+void Player::Initialize(Model* model, uint32_t textureHandle,const Vector3& pos) {
 	model_ = model;
 	worldTransform_.Initialize();
 	textureHandle_ = textureHandle;
 	input_ = Input::GetInstance();
+	worldTransform_.translation_ = pos;
 }
 
 void Player::Update() { 
@@ -48,8 +49,7 @@ void Player::Update() {
 	worldTransform_.translation_.y += move.y;
 	worldTransform_.translation_.z += move.z;
 
-	worldTransform_.matWorld_ = MakeAffineMatrix( worldTransform_.scale_, worldTransform_.rotation_, worldTransform_.translation_);
-
+	
 	const float kMoveLintX = 15.0f;
 	const float kMoveLintY = 15.0f;
 
@@ -58,7 +58,7 @@ void Player::Update() {
 	worldTransform_.translation_.y = max(worldTransform_.translation_.y, -kMoveLintY);
 	worldTransform_.translation_.y = min(worldTransform_.translation_.y, +kMoveLintY);
 
-	worldTransform_.TransferMatrix();
+	worldTransform_.UpdateMatrix();
 
 	ImGui::Begin("Debug");
 	float sliderValue[3] = { worldTransform_.translation_.x, worldTransform_.translation_.y,worldTransform_.translation_.z};
@@ -90,7 +90,7 @@ void Player::Attack() {
 		velocity = TransformNormal(velocity, worldTransform_.matWorld_);
 
 		PlayerBullet* newBullet = new PlayerBullet();
-		newBullet->Initialize(model_, worldTransform_.translation_,velocity);
+		newBullet->Initialize(model_, GetWorldPosition(), velocity);
 		bullet_ = newBullet;
 
 		bullets_.push_back(newBullet);
@@ -104,12 +104,16 @@ Player::~Player() {
 }
 
 Vector3 Player::GetWorldPosition() { 
-	Vector3 worldPos = {};
-	worldPos.x = worldTransform_.translation_.x;
-	worldPos.y = worldTransform_.translation_.y;
-	worldPos.z = worldTransform_.translation_.z;
+	Vector3 worldPos;
+	worldPos.x = worldTransform_.matWorld_.m[3][0];
+	worldPos.y = worldTransform_.matWorld_.m[3][1];
+	worldPos.z = worldTransform_.matWorld_.m[3][2];
 	return worldPos; 
 }
 
 void Player::OnCollision() {}
+
+void Player::SetParent(const WorldTransform* parent) { 
+	worldTransform_.parent_ = parent;
+}
 

@@ -18,7 +18,8 @@ void GameScene::Initialize() {
 	model_ = Model::Create();
 	viewProjection_.Initialize();
 	player_ = new Player();
-	player_->Initialize(model_, textureHandle_);
+	Vector3 playerPosition(0, 0, 50);
+	player_->Initialize(model_, textureHandle_,playerPosition);
 	enemy_ = new Enemy();
 	enemy_->Initialize(model_, {10.0f, 0.0f, 50.0f});
 	enemy_->SetPlayer(player_);
@@ -26,14 +27,18 @@ void GameScene::Initialize() {
 	skydome_ = new skydome();
 	skydome_->Initialize(modelskydome_);
 	debugCamera_ = new DebugCamera(WinApp::kWindowWidth, WinApp::kWindowHeight);
+	railCamera_ = new RailCamera();
+	railCamera_->Initialize({0.0f, 0.0f,0.0f}, {0.0f,0.0f,0.0f});
 	AxisIndicator::GetInstance()->SetVisible(true);
 	AxisIndicator::GetInstance()->SetTargetViewProjection(&viewProjection_);
+	player_->SetParent(&railCamera_->GetWorldTransform());
 }
 
 void GameScene::Update() {
 	player_->Update();
 	enemy_->Update();
 	skydome_->Update();
+	railCamera_->Update();
 
 	CheckAllCollosions();
 
@@ -50,7 +55,10 @@ void GameScene::Update() {
 		viewProjection_.matProjection = debugCamera_->GetViewProjection().matProjection;
 		viewProjection_.TransferMatrix();
 	} else {
-		viewProjection_.UpdateMatrix();
+		//viewProjection_.UpdateMatrix();
+		viewProjection_.matView = railCamera_->GetViewProjection().matView;
+		viewProjection_.matProjection = railCamera_->GetViewProjection().matProjection;
+		viewProjection_.TransferMatrix();
 	}
 }
 
