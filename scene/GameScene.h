@@ -50,7 +50,7 @@ public: // メンバ関数
 	/// </summary>
 	void CheckAllCollosions();
 
-	//const std::list<EnemyBullet*>& GetBullets() { return enemyBullets_; }
+	const std::list<EnemyBullet*>& GetBullets() { return enemyBullets_; }
 
 	void AddEnemyBullet(EnemyBullet* enemyBullet);
 		
