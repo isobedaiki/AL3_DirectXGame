@@ -17,13 +17,13 @@ void Enemy::Initialize(Model* model, const Vector3& pos) {
 
 void Enemy::Update() { 
 
-	bullets_.remove_if([](EnemyBullet* bullet) {
+	/*bullets_.remove_if([](EnemyBullet* bullet) {
 		if (bullet->IsDead()) {
 			delete bullet;
 			return true;
 		}
 		return false;
-	});
+	});*/
 
 	//const float kcharacterSpeed = 0.3f;
 	worldTransform_.UpdateMatrix();
@@ -48,17 +48,17 @@ void Enemy::Update() {
 	}
 
 	
-	for (EnemyBullet* bullet : bullets_) {
+	/*for (EnemyBullet* bullet : bullets_) {
 		bullet->Update();
-	}
+	}*/
 }
 
 void Enemy::Draw(ViewProjection& viewProjection) {
 	model_->Draw(worldTransform_, viewProjection, textureHandle_);
 	
-	for (EnemyBullet* bullet : bullets_) {
+	/*for (EnemyBullet* bullet : bullets_) {
 		bullet->Draw(viewProjection);
-	}
+	}*/
 
 }
 
@@ -89,7 +89,7 @@ void Enemy::Fire() {
 	newBullet->Initialize(model_, worldTransform_.translation_, velocity);
 	//bullet_ = newBullet;
 
-	bullets_.push_back(newBullet);
+	//bullets_.push_back(newBullet);
 }
 
 void Enemy::Approach() { 
@@ -97,9 +97,9 @@ void Enemy::Approach() {
 }
 
 Enemy::~Enemy() {
-	for (EnemyBullet* bullet : bullets_) {
+	/*for (EnemyBullet* bullet : bullets_) {
 		delete bullet;
-	}
+	}*/
 }
 
 Vector3 Enemy::GetWorldPosition() {

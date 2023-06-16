@@ -50,6 +50,10 @@ public: // メンバ関数
 	/// </summary>
 	void CheckAllCollosions();
 
+	//const std::list<EnemyBullet*>& GetBullets() { return enemyBullets_; }
+
+	void AddEnemyBullet(EnemyBullet* enemyBullet);
+		
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
@@ -59,7 +63,6 @@ private: // メンバ変数
 	Enemy* enemy_ = nullptr;
 	skydome* skydome_ = nullptr;
 	Model* modelskydome_ = nullptr;
-	
 
 
 	ViewProjection viewProjection_;
@@ -72,6 +75,8 @@ private: // メンバ変数
 
 	RailCamera* railCamera_ = nullptr;
 
+	std::list<EnemyBullet*> enemyBullets_;
+	
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>

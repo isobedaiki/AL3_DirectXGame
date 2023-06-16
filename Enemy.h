@@ -5,6 +5,7 @@
 #include"WorldTransform.h"
 #include"EnemyBullet.h"
 #include<list>
+#include"GameScene.h"
 
 
 enum class Phase {
@@ -13,6 +14,7 @@ enum class Phase {
 };
 
 class Player;
+class GameClass;
 
 class Enemy {
 public:
@@ -28,9 +30,11 @@ public:
 	Vector3 GetWorldPosition();
 	Vector3 move;
 	void OnCollision();
-	const std::list<EnemyBullet*>& GetBullets() { return bullets_; }
+	//const std::list<EnemyBullet*>& GetBullets() { return bullets_; }
 	const float GetRadius() { return radius_; }
 	const float radius_ = 1.0f;
+	
+	void setGameScene(GameScene* gameScene) { gameScene_ = gameScene; }
 
 private:
 	WorldTransform worldTransform_;
@@ -39,7 +43,8 @@ private:
 	Input* input_ = nullptr;
 	Player* player_ = nullptr;
 	EnemyBullet* bullet_ = nullptr;
-	std::list<EnemyBullet*> bullets_;
+	GameScene* gameScene_ = nullptr;
+	//std::list<EnemyBullet*> bullets_;
 	//Phase* phase_ = nullptr;
 	int32_t pushTimer = 0;
 };
