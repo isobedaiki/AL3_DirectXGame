@@ -4,62 +4,59 @@
 #include<cmath>
 #include "ImGuiManager.h"
 #include"MathUtility.h"
+#include"GameScene.h"
 
+Enemy::~Enemy() {
+}
 
 void Enemy::Initialize(Model* model, const Vector3& pos) {
 	model_ = model;
 	worldTransform_.Initialize();
 	textureHandle_ = TextureManager::Load("zaki.png");
 	worldTransform_.translation_ = pos;
-	//Fire();
 	Approach();
 }
 
 void Enemy::Update() { 
-
-	/*bullets_.remove_if([](EnemyBullet* bullet) {
-		if (bullet->IsDead()) {
-			delete bullet;
-			return true;
-		}
-		return false;
-	});*/
-
-	//const float kcharacterSpeed = 0.3f;
-	worldTransform_.UpdateMatrix();
-	//worldTransform_.translation_.z -= kcharacterSpeed;
+	
 
 	switch (phase_) {
 	case Phase::Approach:
 	default:
-		/*worldTransform_.translation_.z -= kcharacterSpeed;
-		if (worldTransform_.translation_.z < 0.0f) {
-			phase_ = Phase::Leave;
-		}*/
-		pushTimer--;
-		if (pushTimer <= 0) {
-			Fire();
-			pushTimer = KFireInterval;
-		}
+		ApproachUpdate();
 		break;
 	case Phase::Leave:
-		/*worldTransform_.translation_.z += kcharacterSpeed;*/
+		LeaveUpdate();
 		break;
 	}
-
 	
-	/*for (EnemyBullet* bullet : bullets_) {
-		bullet->Update();
-	}*/
+	worldTransform_.UpdateMatrix();
 }
 
 void Enemy::Draw(ViewProjection& viewProjection) {
 	model_->Draw(worldTransform_, viewProjection, textureHandle_);
-	
-	/*for (EnemyBullet* bullet : bullets_) {
-		bullet->Draw(viewProjection);
-	}*/
+}
 
+void Enemy::ApproachUpdate() {
+	worldTransform_.translation_.z -= 0.0f;
+	// 発射タイマーをデクリメント
+	pushTimer--;
+	// 指定時間に達した
+	if (pushTimer <= 0) {
+		// 弾を発射
+		Fire();
+		// 発射タイマーを初期化
+		pushTimer = KFireInterval;
+	}
+}
+
+void Enemy::LeaveUpdate() {
+	worldTransform_.translation_.x -= 0.2f;
+	worldTransform_.translation_.y += 0.2f;
+
+	if (deathTimer_-- < 0) {
+		isDead_ = true;
+	}
 }
 
 void Enemy::Fire() {
@@ -67,8 +64,9 @@ void Enemy::Fire() {
 
 	const float kBulletSpeed = 1.0f;
 
-	/*player_->GetWorldPosition();
-	GetWorldPosition();*/
+	Vector3 playerPos;
+	Vector3 move;
+	playerPos = player_->Player::GetWorldPosition();
 	move.x = player_->GetWorldPosition().x - GetWorldPosition().x;
  	move.y = player_->GetWorldPosition().y - GetWorldPosition().y;
 	move.z = player_->GetWorldPosition().z - GetWorldPosition().z;
@@ -83,24 +81,18 @@ void Enemy::Fire() {
 
 	Vector3 velocity(dir.x * kBulletSpeed, dir.y * kBulletSpeed, dir.z * kBulletSpeed);
 
-	//velocity = TransformNormal(velocity, worldTransform_.matWorld_);
 
 	EnemyBullet* newBullet = new EnemyBullet();
 	newBullet->Initialize(model_, worldTransform_.translation_, velocity);
-	//bullet_ = newBullet;
 
-	//bullets_.push_back(newBullet);
+	gameScene_->AddEnemyBullet(newBullet);
 }
 
 void Enemy::Approach() { 
 	pushTimer = KFireInterval; 
 }
 
-Enemy::~Enemy() {
-	/*for (EnemyBullet* bullet : bullets_) {
-		delete bullet;
-	}*/
-}
+void Enemy::OnCollision() { isDead_ = true; }
 
 Vector3 Enemy::GetWorldPosition() {
 	Vector3 worldPos;
@@ -110,4 +102,3 @@ Vector3 Enemy::GetWorldPosition() {
 	return worldPos;
 }
 
-void Enemy::OnCollision() {}

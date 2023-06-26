@@ -13,7 +13,7 @@ void RailCamera::Initialize(Vector3 pos, Vector3 rot) {
 
 void RailCamera::Update() { 
 	Vector3 move = {0.0f, 0.0f, 0.0f};
-	Vector3 rot = {0.0f, 0.01f, 0.0f};
+	Vector3 rot = {0.0f, 0.00f, 0.0f};
 
 	worldTransform_.translation_.x += move.x;
 	worldTransform_.translation_.y += move.y;
@@ -27,6 +27,8 @@ void RailCamera::Update() {
 	worldTransform_.matWorld_ = MakeAffineMatrix(worldTransform_.scale_, worldTransform_.rotation_, worldTransform_.translation_);
 	viewProjection_.matView = Inverse(worldTransform_.matWorld_);
 	viewProjection_.TransferMatrix();
+
+	//ImGui::SetNextWindowSize({300, 100});
 
 	ImGui::Begin("Camera");
 	//pos

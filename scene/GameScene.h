@@ -13,6 +13,8 @@
 #include"DebugCamera.h"
 #include"skydome.h"
 #include"RailCamera.h"
+#include"list"
+#include<sstream>
 
 /// <summary>
 /// ゲームシーン
@@ -45,14 +47,28 @@ public: // メンバ関数
 	/// </summary>
 	void Draw();
 
+	void AddEnemy(Vector3 pos);
+
+	/// <summary>
+	/// 敵弾を追加する
+	/// </summary>
+	/// <param name="enemyBullet"></param>
+	void AddEnemyBullet(EnemyBullet* enemyBullet);
+
 	/// <summary>
 	/// 衝突判定と応答
 	/// </summary>
 	void CheckAllCollosions();
 
-	const std::list<EnemyBullet*>& GetBullets() { return enemyBullets_; }
+	/// <summary>
+	/// 敵発生データ読み込み
+	/// </summary>
+	void LoadEnemypopData();
 
-	void AddEnemyBullet(EnemyBullet* enemyBullet);
+	/// <summary>
+	/// 敵発生コマンドの更新
+	/// </summary>
+	void UpdateEnemyPopCommands();
 		
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
@@ -60,12 +76,14 @@ private: // メンバ変数
 	Audio* audio_ = nullptr;
 	Model* model_ = nullptr;
 	Player* player_ = nullptr;
-	Enemy* enemy_ = nullptr;
+	
 	skydome* skydome_ = nullptr;
 	Model* modelskydome_ = nullptr;
 
 
 	ViewProjection viewProjection_;
+	std::list<Enemy*> enemyes_;
+	WorldTransform worldTransform_;
 
 	// テクスチャハンドル
 	uint32_t textureHandle_ = 0;
@@ -77,7 +95,10 @@ private: // メンバ変数
 
 	std::list<EnemyBullet*> enemyBullets_;
 	
-	/// <summary>
-	/// ゲームシーン用
-	/// </summary>
+	// 敵発生コマンド
+	std::stringstream enemyPopCommands;
+
+	bool waitFlag = false;
+	int waitTimer;
+
 };
