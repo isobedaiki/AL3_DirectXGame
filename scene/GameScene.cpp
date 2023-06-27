@@ -26,8 +26,9 @@ void GameScene::Initialize() {
 	textureHandle_ = TextureManager::Load("sample.png");
 	model_ = Model::Create();
 	viewProjection_.Initialize();
+	TextureManager::Load("target.png");
+	Vector3 playerPosition(0, 0, 40);
 	player_ = new Player();
-	Vector3 playerPosition(0, 0, 50);
 	player_->Initialize(model_, textureHandle_,playerPosition);
 	//enemy_->setGameScene(this);
 	modelskydome_ = Model::CreateFromOBJ("skydome", true);
@@ -44,7 +45,7 @@ void GameScene::Initialize() {
 }
 
 void GameScene::Update() {
-	player_->Update();
+	player_->Update(viewProjection_);
 	skydome_->Update();
 	railCamera_->Update();
 	debugCamera_->Update();
@@ -149,6 +150,7 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>
+	player_->DrawUI();
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
