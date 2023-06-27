@@ -123,7 +123,8 @@ void Player::Update(ViewProjection& viewProjection) {
 }
 
 void Player::Draw(ViewProjection& viewProjection) {
-	model_->Draw(worldTransform3Dreticle_, viewProjection, textureHandle_);
+	model_->Draw(worldTransform_, viewProjection, textureHandle_);
+	//model_->Draw(worldTransform3Dreticle_, viewProjection, textureHandle_);
 
 	for (PlayerBullet* bullet : bullets_) {
 		bullet->Draw(viewProjection);
