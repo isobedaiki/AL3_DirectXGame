@@ -79,8 +79,8 @@ void Player::Update(ViewProjection& viewProjection) {
 	worldTransform_.translation_.z += move.z;
 
 	
-	const float kMoveLintX = 15.0f;
-	const float kMoveLintY = 15.0f;
+	const float kMoveLintX = 20.0f;
+	const float kMoveLintY = 20.0f;
 
 	worldTransform_.translation_.x = max(worldTransform_.translation_.x, -kMoveLintX);
 	worldTransform_.translation_.x = min(worldTransform_.translation_.x, +kMoveLintX);
