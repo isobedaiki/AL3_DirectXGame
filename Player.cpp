@@ -66,12 +66,17 @@ void Player::Update(ViewProjection& viewProjection) {
 		move.y -= kcharacterSpeed;
 	}
 
-	const float MatRotSpeed = 0.02f;
+	const float MatRotSpeed = 0.002f;
 	if (input_->PushKey(DIK_A)) {
 		worldTransform_.rotation_.y -= MatRotSpeed;
 	} 
 	else if (input_->PushKey(DIK_D)) {
 		worldTransform_.rotation_.y += MatRotSpeed;
+	}
+	if (input_->PushKey(DIK_W)) {
+		worldTransform_.rotation_.x -= MatRotSpeed;
+	} else if (input_->PushKey(DIK_S)) {
+		worldTransform_.rotation_.x += MatRotSpeed;
 	}
 
 	worldTransform_.translation_.x += move.x;
