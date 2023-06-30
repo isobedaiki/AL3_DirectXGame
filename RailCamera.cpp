@@ -28,7 +28,8 @@ void RailCamera::Update() {
 	viewProjection_.matView = Inverse(worldTransform_.matWorld_);
 	viewProjection_.TransferMatrix();
 
-	//ImGui::SetNextWindowSize({300, 100});
+	#ifdef _DEBUG
+	ImGui::SetNextWindowSize({300, 100});
 
 	ImGui::Begin("Camera");
 	//pos
@@ -41,5 +42,5 @@ void RailCamera::Update() {
 	ImGui::SliderFloat3("rotation", sliderRot, -20.0f, 40.0f);
 	worldTransform_.rotation_ = {sliderRot[0], sliderRot[1], sliderRot[2]};
 	ImGui::End();
-
+#endif //  _DEBUG
 }
