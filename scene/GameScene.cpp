@@ -204,9 +204,9 @@ void GameScene::CheckAllCollosions() {
 		for (PlayerBullet* bullets : playerBullets) {
 			posB = bullets->GetWorldPosition();
 
-			float distance = (posB.x - posA.x) * (posB.x - posA.x) +
-			                 (posB.y - posA.y) * (posB.y - posA.y) +
-			                 (posB.z - posA.z) * (posB.z - posA.z);
+			float distance = (posA.x - posB.x) * (posA.x - posB.x) +
+			                 (posA.y - posB.y) * (posA.y - posB.y) +
+			                 (posA.z - posB.z) * (posA.z - posB.z);
 
 			/*float Radius =
 			    (enemy->radius_ + bullets->radius_) * (enemy->radius_ + bullets->radius_);*/

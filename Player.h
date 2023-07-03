@@ -36,4 +36,5 @@ private:
 
 	// 2Dレティクル用スプライト
 	Sprite* sprite2DReticle_ = nullptr;
+	Vector2 spritePos = {640, 360};
 };
