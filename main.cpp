@@ -20,7 +20,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	// ゲームウィンドウの作成
 	win = WinApp::GetInstance();
-	win->CreateGameWindow(L"GC2B_02_イソベ_ダイキ_AL3");
+	win->CreateGameWindow(L"夏休みの課題");
 
 	// DirectX初期化処理
 	dxCommon = DirectXCommon::GetInstance();

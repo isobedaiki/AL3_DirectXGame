@@ -93,6 +93,7 @@ void Player::Update(ViewProjection& viewProjection) {
 		return false;
 	});
 
+	//矢印キー
 	if (input_->PushKey(DIK_LEFT)) {
 		move.x -= kcharacterSpeed;
 	} 
@@ -103,6 +104,17 @@ void Player::Update(ViewProjection& viewProjection) {
 		move.y += kcharacterSpeed;
 	} 
 	else if (input_->PushKey(DIK_DOWN)) {
+		move.y -= kcharacterSpeed;
+	}
+
+	//WASD
+	if (input_->PushKey(DIK_A)) {
+		move.x -= kcharacterSpeed;
+	} else if (input_->PushKey(DIK_D)) {
+		move.x += kcharacterSpeed;
+	} else if (input_->PushKey(DIK_W)) {
+		move.y += kcharacterSpeed;
+	} else if (input_->PushKey(DIK_S)) {
 		move.y -= kcharacterSpeed;
 	}
 
@@ -184,6 +196,7 @@ void Player::Draw(ViewProjection& viewProjection) {
 
 void Player::DrawUI() { sprite2DReticle_->Draw();}
 
+//攻撃　　後に右クリックにする　
 void Player::Attack() {
 	if (input_->TriggerKey(DIK_SPACE)) {
 
