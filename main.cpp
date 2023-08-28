@@ -17,6 +17,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	AxisIndicator* axisIndicator = nullptr;
 	PrimitiveDrawer* primitiveDrawer = nullptr;
 	GameScene* gameScene = nullptr;
+	
+	enum Number { Title,setumei,game, clear, gameover };
+	int Num = Number::Title;
 
 	// ゲームウィンドウの作成
 	win = WinApp::GetInstance();
@@ -63,6 +66,78 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	// メインループ
 	while (true) {
+		switch (Num) {
+		case Title:
+			// メッセージ処理
+			if (win->ProcessMessage()) {
+				break;
+			}
+
+			// ImGui受付開始
+			imguiManager->Begin();
+			// 入力関連の毎フレーム処理
+			input->Update();
+			// ゲームシーンの毎フレーム処理
+			gameScene->Update();
+			// 軸表示の更新
+			axisIndicator->Update();
+			// ImGui受付終了
+			imguiManager->End();
+
+			// 描画開始
+			dxCommon->PreDraw();
+			// ゲームシーンの描画
+			//gameScene->Draw();
+			
+			// プリミティブ描画のリセット
+			primitiveDrawer->Reset();
+			
+			// 描画終了
+			dxCommon->PostDraw();
+
+			//シーン切り替えボタン
+			if (input->PushKey(DIK_SPACE)) {
+				Num = setumei;
+			}
+			break;
+
+			case setumei:
+			// メッセージ処理
+			if (win->ProcessMessage()) {
+				break;
+			}
+
+			// ImGui受付開始
+			imguiManager->Begin();
+			// 入力関連の毎フレーム処理
+			input->Update();
+			// ゲームシーンの毎フレーム処理
+			gameScene->Update();
+			// 軸表示の更新
+			axisIndicator->Update();
+			// ImGui受付終了
+			imguiManager->End();
+
+			// 描画開始
+			dxCommon->PreDraw();
+			// ゲームシーンの描画
+			// gameScene->Draw();
+
+			// プリミティブ描画のリセット
+			primitiveDrawer->Reset();
+
+			// 描画終了
+			dxCommon->PostDraw();
+
+			// シーン切り替えボタン
+			if (input->PushKey(DIK_A)) {
+				Num = game;
+			}
+
+			break;
+
+		case game:
+
 		// メッセージ処理
 		if (win->ProcessMessage()) {
 			break;
@@ -91,7 +166,79 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		imguiManager->Draw();
 		// 描画終了
 		dxCommon->PostDraw();
+		break;
+
+		case clear:
+		// メッセージ処理
+		if (win->ProcessMessage()) {
+			break;
+		}
+
+		// ImGui受付開始
+		imguiManager->Begin();
+		// 入力関連の毎フレーム処理
+		input->Update();
+		// ゲームシーンの毎フレーム処理
+		gameScene->Update();
+		// 軸表示の更新
+		axisIndicator->Update();
+		// ImGui受付終了
+		imguiManager->End();
+
+		// 描画開始
+		dxCommon->PreDraw();
+		// ゲームシーンの描画
+		// gameScene->Draw();
+
+		// プリミティブ描画のリセット
+		primitiveDrawer->Reset();
+
+		// 描画終了
+		dxCommon->PostDraw();
+
+		// シーン切り替えボタン
+		if (input->PushKey(DIK_A)) {
+			Num = Title;
+		}
+		break;
+
+		case gameover:
+		// メッセージ処理
+		if (win->ProcessMessage()) {
+			break;
+		}
+
+		// ImGui受付開始
+		imguiManager->Begin();
+		// 入力関連の毎フレーム処理
+		input->Update();
+		// ゲームシーンの毎フレーム処理
+		gameScene->Update();
+		// 軸表示の更新
+		axisIndicator->Update();
+		// ImGui受付終了
+		imguiManager->End();
+
+		// 描画開始
+		dxCommon->PreDraw();
+		// ゲームシーンの描画
+		// gameScene->Draw();
+
+		// プリミティブ描画のリセット
+		primitiveDrawer->Reset();
+
+		// 描画終了
+		dxCommon->PostDraw();
+
+		// シーン切り替えボタン
+		if (input->PushKey(DIK_A)) {
+			Num = Title;
+		}
+
+		break;
+		}
 	}
+	
 
 	// 各種解放
 	SafeDelete(gameScene);

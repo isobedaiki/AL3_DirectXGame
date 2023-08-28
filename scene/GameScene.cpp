@@ -6,6 +6,7 @@
 #include<fstream>
 
 
+
 GameScene::GameScene() {}
 
 GameScene::~GameScene() {
@@ -19,33 +20,6 @@ GameScene::~GameScene() {
 
 }
 
-GameScene* GameScene::GetInstance() {
-	// 関数内static変数として宣言する
-	static GameScene instance;
-	return &instance;
-}
-
-void GameScene::Switch(int sceneNumber){
-	switch (sceneNumber) {
-	case Title:
-		Novice::DrawBox(0, 0, 1280, 720, 0.0f, GREEN, kFillModeSolid);
-		break;
-
-	case NewGame:
-		Novice::DrawBox(0, 0, 1280, 720, 0.0f, BLUE, kFillModeSolid);
-		break;
-
-	case GamePlay:
-		Novice::DrawBox(0, 0, 1280, 720, 0.0f, BLACK, kFillModeSolid);
-		break;
-
-	case GameClear:
-		Novice::DrawBox(0, 0, 1280, 720, 0.0f, RED, kFillModeSolid);
-		break;
-	}
-	Novice::ScreenPrintf(10, 10, "SceneNumber:%d", sceneNumber);
-	Novice::ScreenPrintf(10, 25, "Press Space to Scene");
-}
 
 void GameScene::Initialize() {
 

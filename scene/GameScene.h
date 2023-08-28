@@ -16,8 +16,6 @@
 #include"list"
 #include<sstream>
 
-enum Scene { Title, NewGame, GamePlay, GameClear };
-
 /// <summary>
 /// ゲームシーン
 /// </summary>
@@ -27,15 +25,12 @@ public: // メンバ関数
 	/// <summary>
 	/// コンストクラタ
 	/// </summary>
-	GameScene(const	GameScene& obj) = delete;
-	GameScene& operator=(const GameScene& obj) = delete;
-	static GameScene* GetInstance();
-	void Switch(int sceneNumber);
+	GameScene();
 
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
-	//~GameScene();
+	~GameScene();
 
 	/// <summary>
 	/// 初期化
@@ -76,10 +71,6 @@ public: // メンバ関数
 	void UpdateEnemyPopCommands();
 		
 private:
-	// コンストラクタをprivateにする
-	GameScene();
-	// デストラクタをprivateにする
-	~GameScene();
 
 	// メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
