@@ -16,6 +16,7 @@ public:
 	void DrawUI();
 	void Attack();
 	~Player();
+
 	Vector3 GetWorldPosition();
 	void OnCollision();
 

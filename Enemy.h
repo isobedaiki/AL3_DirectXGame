@@ -40,7 +40,7 @@ public:
 	void SetGameScene(GameScene* gameScene) { gameScene_ = gameScene; }
 	
 	void OnCollision();
-
+	
 	bool IsDead() const { return isDead_; }
 
 	Vector3 GetWorldPosition();

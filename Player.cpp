@@ -118,13 +118,13 @@ void Player::Update(ViewProjection& viewProjection) {
 		move.y -= kcharacterSpeed;
 	}
 
-	const float MatRotSpeed = 0.02f;
-	if (input_->PushKey(DIK_A)) {
+	/*const float MatRotSpeed = 0.02f;*/
+	/*if (input_->PushKey(DIK_A)) {
 		worldTransform_.rotation_.y -= MatRotSpeed;
 	} 
 	else if (input_->PushKey(DIK_D)) {
 		worldTransform_.rotation_.y += MatRotSpeed;
-	}
+	}*/
 
 	Attack();
 	for (PlayerBullet* bullet : bullets_) {

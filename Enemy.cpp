@@ -62,7 +62,7 @@ void Enemy::LeaveUpdate() {
 void Enemy::Fire() {
 	assert(player_);
 
-	const float kBulletSpeed = 1.0f;
+	const float kBulletSpeed = 1.5f;
 
 	Vector3 playerPos;
 	Vector3 move;
