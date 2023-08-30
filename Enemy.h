@@ -31,6 +31,8 @@ public:
 
 	void Fire();
 
+	void Repop();
+
 	static const int KFireInterval = 60;
 
     void Approach();
@@ -52,6 +54,7 @@ public:
 private:
 	WorldTransform worldTransform_;
 	uint32_t textureHandle_ = 0u;
+	uint32_t textureHandle2_ = 0u;
 	Model* model_ = nullptr;
 
 	enum class Phase {
@@ -65,7 +68,11 @@ private:
 
 	GameScene* gameScene_ = nullptr;
 
+
 	int32_t pushTimer = 0;
+
+	int32_t popTimer = 300;
+	bool pop_ = false;
 
 	int32_t deathTimer_ = 300;
 	// デスフラグ

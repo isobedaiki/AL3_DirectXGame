@@ -13,6 +13,7 @@ void Enemy::Initialize(Model* model, const Vector3& pos) {
 	model_ = model;
 	worldTransform_.Initialize();
 	textureHandle_ = TextureManager::Load("zaki.png");
+	textureHandle2_ = TextureManager::Load("zaki2.png");
 	worldTransform_.translation_ = pos;
 	Approach();
 }
@@ -29,8 +30,9 @@ void Enemy::Update() {
 		LeaveUpdate();
 		break;
 	}
-	
+
 	worldTransform_.UpdateMatrix();
+
 }
 
 void Enemy::Draw(ViewProjection& viewProjection) {
@@ -44,12 +46,15 @@ void Enemy::ApproachUpdate() {
 	// 指定時間に達した
 	if (pushTimer <= 0) {
 		// 弾を発射
-		Fire();
+		//Fire();
 		// 発射タイマーを初期化
 		pushTimer = KFireInterval;
 	}
 }
 
+void Enemy::OnCollision() { 
+	textureHandle_ = TextureManager::Load("zaki2.png");
+}
 void Enemy::LeaveUpdate() {
 	worldTransform_.translation_.x -= 0.2f;
 	worldTransform_.translation_.y += 0.2f;
@@ -92,7 +97,7 @@ void Enemy::Approach() {
 	pushTimer = KFireInterval; 
 }
 
-void Enemy::OnCollision() { isDead_ = true; }
+
 
 Vector3 Enemy::GetWorldPosition() {
 	Vector3 worldPos;

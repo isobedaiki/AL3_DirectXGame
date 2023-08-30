@@ -118,13 +118,13 @@ void Player::Update(ViewProjection& viewProjection) {
 		move.y -= kcharacterSpeed;
 	}
 
-	/*const float MatRotSpeed = 0.02f;*/
-	/*if (input_->PushKey(DIK_A)) {
+	const float MatRotSpeed = 0.02f;
+	if (input_->PushKey(DIK_A)) {
 		worldTransform_.rotation_.y -= MatRotSpeed;
 	} 
 	else if (input_->PushKey(DIK_D)) {
 		worldTransform_.rotation_.y += MatRotSpeed;
-	}*/
+	}
 
 	Attack();
 	for (PlayerBullet* bullet : bullets_) {
@@ -149,7 +149,7 @@ void Player::Update(ViewProjection& viewProjection) {
 	worldTransform_.UpdateMatrix();
 
 	// 自機から3Dレティクルへの距離
-	const float kDistancePlayerTo3DReticle = 50.0f;
+	const float kDistancePlayerTo3DReticle = 40.0f;
 	// 自機から3Dレティクルへのオフセット(Z+向き)
 	Vector3 offset = {0, 0, 1.0f};
 	// 自機のワールド行列の回転を反映
