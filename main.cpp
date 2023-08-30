@@ -174,6 +174,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		    gameScene->Initialize();
 
 		}
+		if (input->PushKey(DIK_R)) {
+			gameScene = new GameScene();
+			gameScene->Initialize();
+		}
 		
 
 		break;
