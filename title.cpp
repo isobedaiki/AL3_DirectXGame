@@ -1,16 +1,16 @@
 ﻿#include "title.h"
 #include <assert.h>
 
-void title::Initialize(Model* model, uint32_t titletextureHandle) {
+void Title::Initialize(Model* model, uint32_t textureHandle) {
 	assert(model);
 
 	model_ = model;
 	worldTransform_.Initialize();
-	titletextureHandle_ = titletextureHandle;
+	textureHandle_ = textureHandle;
 }
 
-void title::Update() { worldTransform_.TransferMatrix(); }
+void Title::Update() { worldTransform_.TransferMatrix(); }
 
-void title::Draw(ViewProjection& viewProjection) {
-	model_->Draw(worldTransform_, viewProjection, titletextureHandle_);
+void Title::Draw(ViewProjection& viewProjection) {
+	model_->Draw(worldTransform_, viewProjection, textureHandle_);
 }

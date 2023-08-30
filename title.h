@@ -1,16 +1,11 @@
 ﻿#pragma once
-#include"Model.h"
-#include"Input.h"
+#include "Model.h"
 #include "ViewProjection.h"
-#include"WorldTransform.h"
-#include"PlayerBullet.h"
-#include<list>
-#include"Sprite.h"
+#include "WorldTransform.h"
 
-
-class title {
+class Title {
 public:
-	void Initialize(Model* model, uint32_t titletextureHandle);
+	void Initialize(Model* model, uint32_t textureHandle);
 
 	void Update();
 
@@ -18,6 +13,8 @@ public:
 
 private:
 	WorldTransform worldTransform_;
-	uint32_t titletextureHandle_ = 0u;
+
 	Model* model_ = nullptr;
+
+	uint32_t textureHandle_ = 0u;
 };

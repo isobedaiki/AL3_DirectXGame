@@ -15,6 +15,7 @@
 #include"RailCamera.h"
 #include"list"
 #include<sstream>
+#include"title.h"
 
 /// <summary>
 /// ゲームシーン
@@ -78,7 +79,10 @@ private:
 	Audio* audio_ = nullptr;
 	Model* model_ = nullptr;
 	Player* player_ = nullptr;
-	
+
+	Title* title_ = nullptr;
+
+
 	skydome* skydome_ = nullptr;
 	Model* modelskydome_ = nullptr;
 
@@ -99,7 +103,7 @@ private:
 	
 	// 敵発生コマンド
 	std::stringstream enemyPopCommands;
-
+	
 	bool waitFlag = false;
 	int waitTimer;
 

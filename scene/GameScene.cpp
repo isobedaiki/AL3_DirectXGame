@@ -7,7 +7,7 @@
 
 
 
-GameScene::GameScene() {}
+GameScene::GameScene() { delete model_, delete title_; }
 
 GameScene::~GameScene() {
 	delete model_, delete player_, delete debugCamera_,delete skydome_, delete modelskydome_,delete railCamera_;
@@ -43,6 +43,8 @@ void GameScene::Initialize() {
 	AxisIndicator::GetInstance()->SetVisible(true);
 	AxisIndicator::GetInstance()->SetTargetViewProjection(&viewProjection_);
 	player_->SetParent(&railCamera_->GetWorldTransform());
+	title_ = new Title();
+	title_->Initialize(model_, textureHandle_);
 	//AddEnemy({0,3,80,});
 	LoadEnemypopData();
 }
@@ -50,6 +52,7 @@ void GameScene::Initialize() {
 void GameScene::Update() {
 	player_->Update(viewProjection_);
 	skydome_->Update();
+	title_->Update();
 	railCamera_->Update();
 	debugCamera_->Update();
 	UpdateEnemyPopCommands();
@@ -131,6 +134,7 @@ void GameScene::Draw() {
 	/// </summary>
 	///
 	player_->Draw(viewProjection_);
+	title_->Draw(viewProjection_);
 
     for (Enemy* enemy : enemyes_) {
 		enemy->Draw(viewProjection_);
