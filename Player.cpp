@@ -93,19 +93,19 @@ void Player::Update(ViewProjection& viewProjection) {
 		return false;
 	});
 
-	//矢印キー
-	if (input_->PushKey(DIK_LEFT)) {
-		move.x -= kcharacterSpeed;
-	} 
-	else if (input_ -> PushKey(DIK_RIGHT)) {
-		move.x += kcharacterSpeed;
-	} 
-	else if (input_->PushKey(DIK_UP)) {
-		move.y += kcharacterSpeed;
-	} 
-	else if (input_->PushKey(DIK_DOWN)) {
-		move.y -= kcharacterSpeed;
-	}
+	////矢印キー
+	//if (input_->PushKey(DIK_LEFT)) {
+	//	move.x -= kcharacterSpeed;
+	//} 
+	//else if (input_ -> PushKey(DIK_RIGHT)) {
+	//	move.x += kcharacterSpeed;
+	//} 
+	//else if (input_->PushKey(DIK_UP)) {
+	//	move.y += kcharacterSpeed;
+	//} 
+	//else if (input_->PushKey(DIK_DOWN)) {
+	//	move.y -= kcharacterSpeed;
+	//}
 
 	//WASD
 	if (input_->PushKey(DIK_A)) {
@@ -198,7 +198,7 @@ void Player::DrawUI() { sprite2DReticle_->Draw();}
 
 //攻撃　　後に右クリックにする　
 void Player::Attack() {
-	if (input_->TriggerKey(DIK_SPACE)) {
+	if (input_->IsTriggerMouse(0)) {
 
 		const float kBulletSpeed = 1.0f;
 		Vector3 velocity(0, 0, kBulletSpeed);

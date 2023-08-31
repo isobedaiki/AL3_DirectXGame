@@ -115,7 +115,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			dxCommon->PostDraw();
 
 			//シーン切り替えボタン
-			if (input->PushKey(DIK_SPACE)) {
+			if (input->TriggerKey(DIK_SPACE)) {
 				Num = setumei;
 			}
 			break;
@@ -149,7 +149,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			dxCommon->PostDraw();
 
 			// シーン切り替えボタン
-			if (input->PushKey(DIK_A)) {
+			if (input->TriggerKey(DIK_SPACE)) {
 				Num = game;
 			}
 
