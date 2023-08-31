@@ -3,6 +3,7 @@
 #include "DirectXCommon.h"
 #include "GameScene.h"
 #include"TitleScene.h"
+#include"SetumeiScene.h"
 #include "ImGuiManager.h"
 #include "PrimitiveDrawer.h"
 #include "TextureManager.h"
@@ -20,7 +21,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	PrimitiveDrawer* primitiveDrawer = nullptr;
 	GameScene* gameScene = nullptr;
 	TitleScene* titleScene = nullptr;
-
+	SetumeiScene* setumeiScene = nullptr;
 	
 	enum Number { Title,setumei,game, clear, gameover };
 	int Num = Number::Title;
@@ -72,6 +73,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	titleScene = new TitleScene();
 	titleScene->Initialize();
 
+	// タイトルシーンの初期化
+	setumeiScene = new SetumeiScene();
+	setumeiScene->Initialize();
+
 	// メインループ
 	while (true) {
 		switch (Num) {
@@ -120,7 +125,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			// 入力関連の毎フレーム処理
 			input->Update();
 			// ゲームシーンの毎フレーム処理
-			gameScene->Update();
+			setumeiScene->Update();
 			// 軸表示の更新
 			axisIndicator->Update();
 			// ImGui受付終了
@@ -129,7 +134,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			// 描画開始
 			dxCommon->PreDraw();
 			// ゲームシーンの描画
-			// gameScene->Draw();
+			 setumeiScene->Draw();
 
 			// プリミティブ描画のリセット
 			primitiveDrawer->Reset();
