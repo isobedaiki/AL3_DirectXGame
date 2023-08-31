@@ -5,7 +5,7 @@ void PlayerBullet::Initialize(Model* model, const Vector3& pos, const Vector3& v
 	assert(model);
 	model_ = model;
 
-	texturehandle_ = TextureManager::Load("uvChecker.png");
+	texturehandle_ = TextureManager::Load("tama.png");
 
 	worldTransform_.Initialize();
 	worldTransform_.translation_ = pos;
