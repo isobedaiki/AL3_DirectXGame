@@ -10,7 +10,8 @@
 GameScene::GameScene() { delete model_, delete title_; }
 
 GameScene::~GameScene() {
-	delete model_, delete player_, delete debugCamera_,delete skydome_, delete modelskydome_,delete railCamera_;
+	delete model_, delete player_, delete debugCamera_, delete skydome_, delete modelskydome_,
+	    delete railCamera_;
 	for (Enemy* enemy : enemyes_) {
 		delete enemy;
 	}
@@ -27,6 +28,7 @@ void GameScene::Initialize() {
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
 	textureHandle_ = TextureManager::Load("sample.png");
+	
 	model_ = Model::Create();
 	viewProjection_.Initialize();
 	TextureManager::Load("target.png");
@@ -45,6 +47,8 @@ void GameScene::Initialize() {
 	player_->SetParent(&railCamera_->GetWorldTransform());
 	title_ = new Title();
 	title_->Initialize(model_, textureHandle_);
+
+	
 	//AddEnemy({0,3,80,});
 	LoadEnemypopData();
 }
